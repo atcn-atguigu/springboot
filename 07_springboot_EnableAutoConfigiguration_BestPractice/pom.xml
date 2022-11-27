@@ -5,7 +5,7 @@
     <modelVersion>4.0.0</modelVersion>
 
     <groupId>org.example</groupId>
-    <artifactId>07_springboot_autoConfig</artifactId>
+    <artifactId>07_springboot_EnableAutoConfigiguration_BestPractice</artifactId>
     <version>1.0-SNAPSHOT</version>
 
     <!-- starter-parent 依赖 -->

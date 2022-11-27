@@ -305,3 +305,159 @@ SpringBoot默认会在底层配好所有的组件，但是**如果用户自己�
 **xxxxxAutoConfiguration ---> 组件 ---> xxxxProperties里面拿值  ----> application.properties**
 
 [Springboot官方文档- common-application-properties](https://docs.spring.io/spring-boot/docs/2.3.4.RELEASE/reference/html/appendix-application-properties.html#common-application-properties)
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+## 16、最佳实践-SpringBoot应用如何编写
+
+- 引入场景依赖(using-boot-starter)
+    - [官方文档](https://docs.spring.io/spring-boot/docs/current/reference/html/using-spring-boot.html#using-boot-starter)
+- 查看自动配置了哪些（选做）
+    - 自己分析，引入场景对应的自动配置一般都生效了
+    - 配置文件中 **debug=true** 开启自动配置报告。
+        - Negative（自动配置不生效）
+        - Positive（自动配置生效）
+```plain/text
+2022-11-27 20:04:51.728  INFO 65558 --- [  restartedMain] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat started on port(s): 9443 (http) with context path ''
+2022-11-27 20:04:52.057 DEBUG 65558 --- [  restartedMain] ConditionEvaluationReportLoggingListener : 
+
+
+============================
+CONDITIONS EVALUATION REPORT
+============================
+
+
+Positive matches:
+-----------------
+
+   AopAutoConfiguration matched:
+      - @ConditionalOnProperty (spring.aop.auto=true) matched (OnPropertyCondition)
+
+   AopAutoConfiguration.ClassProxyingConfiguration matched:
+      - @ConditionalOnMissingClass did not find unwanted class 'org.aspectj.weaver.Advice' (OnClassCondition)
+      - @ConditionalOnProperty (spring.aop.proxy-target-class=true) matched (OnPropertyCondition)
+
+   DispatcherServletAutoConfiguration matched:
+      - @ConditionalOnClass found required class 'org.springframework.web.servlet.DispatcherServlet' (OnClassCondition)
+      - found 'session' scope (OnWebApplicationCondition)
+...
+...
+Negative matches:
+-----------------
+
+   ActiveMQAutoConfiguration:
+      Did not match:
+         - @ConditionalOnClass did not find required class 'javax.jms.ConnectionFactory' (OnClassCondition)
+
+   AopAutoConfiguration.AspectJAutoProxyingConfiguration:
+      Did not match:
+         - @ConditionalOnClass did not find required class 'org.aspectj.weaver.Advice' (OnClassCondition)
+```
+- 是否需要修改
+    - 参照文档修改配置项
+        - [common-application-properties官方文档](https://docs.spring.io/spring-boot/docs/current/reference/html/appendix-application-properties.html#common-application-properties)
+        - 自己分析。xxxxProperties绑定了配置文件的哪些。
+    - 自定义加入或者替换组件
+        - @Bean、@Component...
+    - 自定义器  XXXXXCustomizer；
+    - ......
+
+## 17、最佳实践-Lombok简化开发
+
+[lombok官方文档](https://projectlombok.org/features/)
+
+Lombok用标签方式代替构造器、getter/setter、toString()等鸡肋代码。
+
+spring boot已经管理Lombok。引入依赖：
+
+```xml
+ <dependency>
+     <groupId>org.projectlombok</groupId>
+     <artifactId>lombok</artifactId>
+</dependency>
+```
+
+IDEA中File->Settings->Plugins，搜索安装lombok插件。
+
+```java
+@NoArgsConstructor  // 用在类上，自动生成无参构造
+//@AllArgsConstructor   // 用在类上，使用所有参数的构造函数
+@Data   // 相当于同时使用了@ToString、@EqualsAndHashCode、@Getter、@Setter和@RequiredArgsConstrutor这些注解
+@ToString   // 用在类上，可以自动覆写toString方法，当然还可以加其他参数，例如@ToString(exclude=”id”)排除id属性，或者@ToString(callSuper=true, includeFieldNames=true)调用父类的toString方法，包含所有属性
+@EqualsAndHashCode  // 用在类上，自动生成equals方法和hashCode方法
+public class User {
+
+    private String name;
+    private Integer age;
+
+    private Pet pet;
+
+    public User(String name,Integer age){
+        this.name = name;
+        this.age = age;
+    }
+}
+```
+
+---
+
+简化日志开发
+
+```java
+@Slf4j  // 日志注解
+@RestController
+public class HelloController {
+    @RequestMapping("/hello")
+    public String handle01(@RequestParam("name") String name){
+        log.info("请求进来了....");  // 日志使用
+        return "Hello, Spring Boot 2!"+"你好："+name;
+    }
+}
+```
+
+## 18、最佳实践-dev-tools
+
+> Spring Boot includes an additional set of tools that can make the application development experience a little more pleasant. The `spring-boot-devtools` module can be included in any project to provide additional development-time features.——[link](https://docs.spring.io/spring-boot/docs/2.3.8.RELEASE/reference/html/using-spring-boot.html#using-boot-devtools)
+>
+> Applications that use `spring-boot-devtools` automatically restart whenever files on the classpath change. This can be a useful feature when working in an IDE, as it gives a very fast feedback loop for code changes. By default, any entry on the classpath that points to a directory is monitored for changes. Note that certain resources, such as static assets and view templates, [do not need to restart the application](https://docs.spring.io/spring-boot/docs/2.3.8.RELEASE/reference/html/using-spring-boot.html#using-boot-devtools-restart-exclude).——[link](https://docs.spring.io/spring-boot/docs/2.3.8.RELEASE/reference/html/using-spring-boot.html#using-boot-devtools-restart)
+>
+> Triggering a restart
+>
+> As DevTools monitors classpath resources, the only way to trigger a restart is to update the classpath. The way in which you cause the classpath to be updated depends on the IDE that you are using:
+>
+> - In Eclipse, saving a modified file causes the classpath to be updated and triggers a restart.
+> - In IntelliJ IDEA, building the project (`Build -> Build Project`)(shortcut: **Ctrl+F9**) has the same effect.
+
+添加依赖：
+
+```xml
+<dependencies>
+    <dependency>
+        <groupId>org.springframework.boot</groupId>
+        <artifactId>spring-boot-devtools</artifactId>
+        <optional>true</optional>
+    </dependency>
+</dependencies>
+```
+
+在IDEA中，项目或者页面修改以后：**Ctrl+F9**。
+
+## 19、最佳实践-Spring Initailizr
+[Spring Initailizr](https://start.spring.io/)是创建Spring Boot工程向导。
+
+在IDEA中，菜单栏New -> Project -> Spring Initailizr。
+
