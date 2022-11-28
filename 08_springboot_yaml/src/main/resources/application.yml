@@ -1,0 +1,40 @@
+# 这里是注释
+server:
+  port: 9443
+
+
+person:
+  # ⚠️ "userName" 等同于 "user-name"
+  userName: Sam           # String - ⚠️ 默认可不加引号。加"双引号"则转义字符可生效，用'单引号'代表字面意思不转义
+  isMarried: false        # Boolean
+  birth: 2000/11/28       # Date
+  age: 12                 # Integer
+#  interests: [篮球，足球]  # String[] - Option 1
+  interests:              # String[] - Option 2
+    - basketball
+    - football
+#  favouriteColors: [blue, green]      # List<String> - Option 1
+  favouriteColors:                     # List<String> - Option 2
+    - blue
+    - green
+#  score: { English: 90, Chinese: 95}   # Map<String, Object>
+  score:                  # Map<String, Object>
+    English: 90
+    Chinese: 95
+  salaries:               # Set<Double>
+    - 9999.90
+    - 9999.99
+  pet:                    # Pet pet
+    name: dogA
+    weight: 50.22
+  allPets:                # Map<String, List<Pet>>
+    sick:                 # Map key1 - sick
+      - { name: dogA, weight: 50}   # Pet object: dogA - Option 1
+      - name: catA                  # Pet object: catA - Option 2
+        weight: 30
+      - name: insectA                  # Pet object: insectA
+        weight: 10
+    health:               # Map key2 - health
+      - { name: dogB, weight: 45}   # Pet object: dogB
+      - { name: catC, weight: 55}   # Pet object: catC
+
