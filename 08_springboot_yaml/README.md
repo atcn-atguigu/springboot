@@ -160,3 +160,8 @@ Visit output: http://localhost:9443/
     </plugins>
 </build>
 ```
+效果展示：
+![1_spring-boot-configuration-processor](readme_pic/1_spring-boot-configuration-processor.png)
+
+打包完后确认jar包里已经不包含依赖jar
+![2_spring-boot-configuration-processor_PluginCheck](readme_pic/2_spring-boot-configuration-processor_PluginCheck.png)
