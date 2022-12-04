@@ -17,12 +17,11 @@
 
 ```yaml
 spring:
-  web:
-    resources:
-      # 静态资源默认路径
-      #spring.web.resources.static-locations=classpath:/META-INF/resources/, classpath:/resources/, classpath:/static/, classpath:/public/
-      # 手动修改后，⚠️注意，自定义目录下，如"myCustomizedStaticFolder"放"index.html"以及"favicon.ico"不能生效。除自定义，其他默认目录"/META-INF/resources/"、"/resources/"、"/static/"、"/public/"可生效
-      static-locations: classpath:/myCustomizedStaticFolder/, classpath:/META-INF/resources/, classpath:/resources/, classpath:/static/, classpath:/public/
+  resources:
+    # 静态资源默认路径
+    #spring.web.resources.static-locations=classpath:/META-INF/resources/, classpath:/resources/, classpath:/static/, classpath:/public/
+    # 手动修改后，⚠️注意，若开启访问前缀（/resources/**），则自定义目录"myCustomizedStaticFolder"下不建议放"index.html"以及"favicon.ico"文件，会不生效。除自定义，其他默认目录"/META-INF/resources/"、"/resources/"、"/static/"、"/public/"可生效
+    static-locations: [classpath:/myCustomizedStaticFolder/, classpath:/META-INF/resources/, classpath:/resources/, classpath:/static/, classpath:/public/]
 
   mvc:
   # 默认静态资源访问前缀 - spring.mvc.static-path-pattern=/**

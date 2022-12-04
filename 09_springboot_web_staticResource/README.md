@@ -87,7 +87,7 @@ http://localhost:8080/4.png
 # 静态资源默认路径
 #spring.web.resources.static-locations=classpath:/META-INF/resources/, classpath:/resources/, classpath:/static/, classpath:/public/
 # 手动修改后
-spring.web.resources.static-locations=classpath:/myCustomizedStaticFolder/, classpath:/META-INF/resources/, classpath:/resources/, classpath:/static/, classpath:/public/
+spring.resources.static-locations=classpath:/myCustomizedStaticFolder/, classpath:/META-INF/resources/, classpath:/resources/, classpath:/static/, classpath:/public/
 ```
 手动修改默认静态资源路径后
 ```plain/text
