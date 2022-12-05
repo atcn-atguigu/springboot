@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>首页</title>
+</head>
+<body>
+<h1>首页</h1>
+
+<form action="/user" method="get">
+    <input value="REST-GET提交" type="submit"/>
+</form>
+
+<form action="/user" method="post">
+    <input value="REST-POST提交" type="submit"/>
+</form>
+
+<form action="/user" method="post">
+    <input name="_method" type="hidden" value="DELETE"/> <!-- 这行能触发HiddenHttpMethodFilter来发送DELETE请求 -->
+    <input value="REST-DELETE 提交" type="submit"/>
+</form>
+
+<form action="/user" method="post">
+    <input name="_method" type="hidden" value="PUT"/> <!-- 这行能触发HiddenHttpMethodFilter来发送PUT请求 -->
+    <input value="REST-PUT提交" type="submit"/>
+</form>
+
+</body>
+</html>
