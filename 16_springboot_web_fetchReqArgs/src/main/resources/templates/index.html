@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>index首页</title>
+</head>
+<body>
+<h1>首页</h1>
+<h3>1. 通过使用原生HttpServletRequest类的getParameter()方法获取请求参数的值</h3>
+<a th:href="@{/testServletAPI(username='admin', password=123456)}">测试使用原生Servlet API获取请求参数的值, "/testServletAPI?username=admin&password=123456" --> success.html</a><br/>
+<hr/>
+<h3>2. 通过使用controller方法的形参来获取请求参数的值</h3>
+<a th:href="@{/testParameter(username='admin', password=123456)}">测试使用controller方法的形参接收参数(username, password), "/testParameter(username='admin', password=123456)" --> success.html</a><br/>
+<br/>形参显式声明只接收2个parameters，但如果路径匹配下，传入其他味声明的形参值，也同样能处理请求
+<form th:action="@{/testParameter}" method="get">
+    用户名：<input type="text" name="username"><br/>
+    密码：<input type="password" name="password"><br/>
+    爱好：跑步<input type="checkbox" name="hobby" value="running">
+         游泳<input type="checkbox" name="hobby" value="swimming"><br/>
+    <input type="submit" value="测试使用controller方法的形参接收参数(username, password, 其他：hobby), '/testParameter?username=root&password=123456&hobby=running&hobby=swimming GET' --> success.html">
+</form>
+<br/>形参使用String接收"字符串数组"，output: username：root，password：123456，hobby：running,swimming
+<form th:action="@{/testParameterMultiValue}" method="get">
+    用户名：<input type="text" name="username"><br/>
+    密码：<input type="password" name="password"><br/>
+    爱好：跑步<input type="checkbox" name="hobby" value="running">
+    游泳<input type="checkbox" name="hobby" value="swimming"><br/>
+    <input type="submit" value="测试使用controller方法的形参获取请求参数的值, '/testParameterMultiValue?username=root&password=123456&hobby=running&hobby=swimming GET' --> success.html">
+</form>
+<br/>形参使用String[]接收"字符串数组"，output: username：root，password：123456，hobby：[running, swimming]
+<form th:action="@{/testParameterStringArray}" method="get">
+    用户名：<input type="text" name="username"><br/>
+    密码：<input type="password" name="password"><br/>
+    爱好：跑步<input type="checkbox" name="hobby" value="running">
+    游泳<input type="checkbox" name="hobby" value="swimming"><br/>
+    <input type="submit" value="测试使用controller方法的形参获取请求参数的值, '/testParameterStringArray?username=root&password=123456&hobby=running&hobby=swimming GET' --> success.html">
+</form>
+<hr/>
+<h3>3. @RequestParam 请求参数名与形参变量名的映射</h3>
+<a th:href="@{/testRequestParamTag(user-name=admin)}">前端发送请求参数为"user-name"，控制器方法形参通过注解@RequestParam映射成变量名"username"， "/testRequestParamTag(user-name=admin)" --> success.html</a><br/>
+<a th:href="@{/testRequestParamTagRequired}">前端发送请求参数为"user-name"，控制器方法形参通过注解@RequestParam映射成变量名"username"，不传参数required = false（默认true） "/testRequestParamTagRequired" --> success.html</a><br/>
+<a th:href="@{/testRequestParamTagDefaultValue}">前端发送请求不传参数为"user-name"，不传参数，默认值hello "/testRequestParamTagDefaultValue" --> success.html</a><br/>
+<a th:href="@{/testRequestParamTagDefaultValue2(user-name=)}">前端发送请求参数为"user-name="，值为空，同样认为是没有传参数，默认值hello "/testRequestParamTagDefaultValue2" --> success.html</a><br/>
+<a th:href="@{/testRequestParamTagMap(username='admin', password=123456)}">前端发送请求参数为"username='admin', password=123456"，"/testRequestParamTagMap"，使用@RequestParam的Map类型接收所有参数 --> success.html</a><br/>
+<hr/>
+<h3>4. @RequestHeader 获取请求的header (用法同上)</h3>
+<a th:href="@{/testRequestHeaderTag}">前端发送请求header为"Host: localhost:8080"，控制器方法形参通过注解@RequestHeader映射成变量名"host"， "/testRequestHeaderTag" --> success.html</a><br/>
+<a th:href="@{/testRequestHeaderTagRequired}">前端发送请求不含header名"NotExistHeader"，控制器方法形参通过注解@RequestHeader映射成变量名映射成变量名"notExistHeader"，不传参数required = false（默认true） "/testRequestHeaderTagRequired" --> success.html</a><br/>
+<a th:href="@{/testRequestHeaderTagDefaultValue}">前端发送请求不含header名"NotExistHeader"，设置header "NotExistHeader"默认值hello "/testRequestHeaderTagDefaultValue" --> success.html</a><br/>
+<p>Postman测试：前端发送请求带含header名"NotExistHeader"，值为空，同样认为是没有传参数，默认值hello "/testRequestHeaderTagDefaultValue2" --> success.html</p>
+<texta style="height: 50px; width:840px"></texta>
+<textarea>curl --location --request GET 'http://localhost:8080/03_springmvc_fetchReqArgs_war_exploded/testRequestHeaderTagDefaultValue2' \
+--header 'NotExistHeader;'</textarea>
+<hr/>
+<h3>5. @CookieValue 获取请求的cookie (用法同上)</h3>
+<a th:href="@{/testCreateSessionCookieAndStoreToBrowser}">原生ServletAPI创建cookie， "/testCreateSessionCookieAndStoreToBrowser" --> success.html</a><br/>
+<a th:href="@{/testCookieValueTagString}">前端发送请求，获取前端发送请求自带的cookie，控制器方法形参通过注解@CookieValue映射成变量名"cookie"（String类型）， "/testCookieValueTagString" --> success.html</a><br/>
+<a th:href="@{/testCookieValueTagCookie}">前端发送请求，获取前端发送请求自带的cookie，控制器方法形参通过注解@CookieValue映射成变量名"cookie"（Cookie类型）， "/testCookieValueTagCookie" --> success.html</a><br/>
+<a th:href="@{/testCookieValueTagRequired}">前端发送请求不含cookie的header名"NotExistCookieValue"，控制器方法形参通过注解@RequestHeader映射成变量名映射成变量名"notExistCookieValue"，不传参数required = false（默认true） "/testCookieValueTagRequired" --> success.html</a><br/>
+<a th:href="@{/testRequestHeaderTagDefaultValue}">前端发送请求不含cookie的header名"NotExistCookieValue"，设置cookie "NotExistCookieValue"默认值hello "/testCookieValueTagDefaultValue" --> success.html</a><br/>
+<p>Postman测试：前端发送请求带含cookie的header名"NotExistCookieValue"，值为空，同样认为是没有传参数，默认值hello "/testCookieValueTagDefaultValue2" --> success.html</p>
+<textarea style="height: 50px; width:840px">curl --location --request GET 'http://localhost:8080/03_springmvc_fetchReqArgs_war_exploded/testCookieValueTagDefaultValue2' \
+--header 'Cookie: notExistCookieValue=""'</textarea>
+<hr/>
+<h3>6. 通过POJO获取请求参数</h3>
+<form th:action="@{/testPojo}" method="post">
+    用户名：<input type="text" name="username"><br>
+    密码：<input type="password" name="password"><br>
+    性别：<input type="radio" name="sex" value="男">男<input type="radio" name="sex" value="女">女<br>
+    年龄：<input type="text" name="age"><br>
+    邮箱：<input type="text" name="email"><br>
+    <input type="submit">
+</form>
+<hr/>
+</body>
+</html>
