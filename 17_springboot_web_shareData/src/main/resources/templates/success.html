@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>success成功页</title>
+</head>
+<body>
+<h1>成功页</h1>
+<h3>1、request域: Servlet API</h3>
+<!-- 视图接收Servlet API request域对象共享的数据，thymeleaf只能解析属性上大括号的值，所以不能写在p标签内部 -->
+<p th:text="${testServletAPIAttributeData}"></p>
+<hr/>
+<h3>2、request域: Model And View</h3>
+<p th:text="${modelAndViewScopeData}"></p>
+<hr/>
+<h3>3、request域：Model</h3>
+<p th:text="${modelAttributeData}"></p>
+<hr/>
+<h3>4、request域：Map</h3>
+<p th:text="${mapData}"></p>
+<hr/>
+<h3>5、request域：ModelMap</h3>
+<p th:text="${modelMapAttributeData}"></p>
+<p th:text="${modelMapPutData}"></p>
+<hr/>
+<h3>7、session域：Session（推荐使用的原生Servlet API，而不是Spring MVC的注解@SessionAttribute）</h3>
+<!-- 通过session.属性值来获取session的信息 -->
+<p th:text="${session.testSessionScope}"></p>
+<hr/>
+<h3>8、application域；application</h3>
+<!-- 通过application.属性值来获取application的信息 -->
+<p th:text="${application.testApplicationScope}"></p>
+<hr/>
+<h3>9、request域：@RequestAttribute</h3>
+<p th:text="${readRequestAttributeScope}"></p>
+<hr/>
+</body>
+</html>

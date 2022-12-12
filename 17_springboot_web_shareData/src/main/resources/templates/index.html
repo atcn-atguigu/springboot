@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>index首页</title>
+</head>
+<body>
+<h1>首页</h1>
+<h3>1、通过使用原生HttpServletRequest类的setAttribute()方法，向request域对象共享数据</h3>
+<a th:href="@{/testScopeOfServletAPI}">测试使用原生Servlet API，值传递返回给视图页面success.html, "/testScopeOfServletAPI" --> success.html</a><br/>
+<hr/>
+<h3>2、使用ModelAndView向request域对象共享数据</h3>
+<a th:href="@{/testScopeOfModelAndView}">测试使用ModelAndView类，值传递返回给视图页面success.html, "/testScopeOfModelAndView" --> success.html</a><br/>
+<hr/>
+<h3>3、使用Model向request域对象共享数据</h3>
+<a th:href="@{/testScopeOfModel}">测试使用方法形参Model，值传递返回给视图页面success.html, "/testScopeOfModel" --> success.html</a><br/>
+<hr/>
+<h3>4、使用map向request域对象共享数据</h3>
+<a th:href="@{/testScopeOfMap}">测试使用方法形参Map，值传递返回给视图页面success.html, "/testScopeOfMap" --> success.html</a><br/>
+<hr/>
+<h3>5、使用ModelMap向request域对象共享数据</h3>
+<a th:href="@{/testScopeOfModelMap}">测试使用方法形参ModelMap，值传递返回给视图页面success.html, "/testScopeOfModelMap" --> success.html</a><br/>
+<hr/>
+<h3>7、Session - 通过Servlet API向session域对象共享数据(推荐使用的原生Servlet API，而不是Spring MVC的注解@SessionAttribute）</h3>
+<a th:href="@{/testSession}">测试使用原生Servlet API，值保存于session共享传递返回给视图页面success.html, "/testSession" --> success.html</a><br/>
+<hr/>
+<h3>8、Application(ServletContext - 通过Servlet API获取ServletContext向application域对象共享数据</h3>
+<a th:href="@{/testApplication}">测试使用原生Servlet API，值保存于application共享传递返回给视图页面success.html, "/testApplication" --> success.html</a><br/>
+<hr/>
+<h3>9、@RequestAttribute获取request域对象共享数据</h3>
+<a th:href="@{/testAnnotationRequestAttribute}">测试使用方法形参使用 @RequestAttribute("k") String v，获取request域共享属性值，值传递返回, "/testAnnotationRequestAttribute" forward "/readRequestAttribute"</a><br/>
+<hr/>
+</body>
+</html>
