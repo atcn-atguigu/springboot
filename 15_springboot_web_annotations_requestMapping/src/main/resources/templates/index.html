@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>index首页</title>
+</head>
+<body>
+<h1>首页</h1>
+<h3>请求路径层级测试</h3>
+<a th:href="@{/a/b}"> 测试@RequestMapping注解的位置，访问多层级目录URI测试： "/a/b" --> success.html</a><br/>
+<hr/>
+<h3>@RequestMapping注解的"value"属性</h3>
+<a th:href="@{/testRequestMappingValue1}">测试@RequestMapping注解的value属性，多个value值1： "/testRequestMappingValue1" --> success.html</a><br/>
+<a th:href="@{/testRequestMappingValue2}">测试@RequestMapping注解的value属性，多个value值2： "/testRequestMappingValue2" --> success.html</a><br/>
+<hr/>
+<h3>@RequestMapping注解的"method"属性</h3>
+<a th:href="@{/testRequestMethod}">测试@RequestMapping注解的method属性，多个method值1 GET： "/testRequestMethod，GET" --> success.html</a><br/>
+<form th:action="@{/testRequestMethod}" method="post">
+    <input type="submit" value="测试@RequestMapping注解的method属性，多个method值2：POST: '/testRequestMethod，POST' --> success.html">
+</form><br/>
+<hr/>
+<h3>@RequestMapping注解的拓展注解（指定method）</h3>
+<a th:href="@{/testGetMapping}">测试@GetMapping注解，GET： "/testGetMapping" --> success.html</a><br/>
+<form th:action="@{/testPostMapping}" method="post">
+    <input type="submit" value="测试@PostMapping注解，POST： '/testPostMapping' --> success.html">
+</form><br/>
+⚠️注意：form表单只能支持get和post方法，如果未匹配上，则按get处理 -- HTTP Status 405 – Method Not Allowed
+<form th:action="@{/testPutMapping}" method="put">
+    <input type="submit" value="测试@PutMapping注解，PUT： '/testPutMapping' --> success.html(⚠️❌)">
+</form><br/>
+<form th:action="@{/testDeleteMapping}" method="delete">
+    <input type="submit" value="测试@DeleteMapping注解，DELETE： '/testDeleteMapping' --> success.html(⚠️❌)">
+</form><br/>
+<form th:action="@{/testPatchMapping}" method="patch">
+    <input type="submit" value="测试@PatchMapping注解，PATCH： '/testPatchMapping' --> success.html(⚠️❌)">
+</form><br/>
+<hr/>
+<h3>@RequestMapping注解的"params"属性 - 写法一</h3>
+<a th:href="@{/testRequestParam/mustHaveParam?username=test}">测试@RequestMapping注解的params属性，“param”：必须携带param参数： "/testRequestParam/mustHaveParam?username=test" --> success.html</a><br/>
+<a th:href="@{/testRequestParam/canNotHaveParam?skipLogon=true}">测试@RequestMapping注解的params属性，“!param”：不能携带param参数： "/testRequestParam/canNotHaveParam?skipLogon=true" --> success.html(⚠️❌)</a><br/>
+<a th:href="@{/testRequestParam/paramKeyValueMatch?user=admin}">测试@RequestMapping注解的params属性，“param=value”：必须携带param请求参数且param=value： "/testRequestParam/paramKeyValueMatch?user=admin" --> success.html</a><br/>
+<a th:href="@{/testRequestParam/paramKeyValueNotMatch?user=anonymous}">测试@RequestMapping注解的params属性，“param!=value”：必须携带param请求参数但是param!=value： "/testRequestParam/paramKeyValueNotMatch?user=anonymous" --> success.html(⚠️❌）</a><br/>
+<hr/>
+<hr/>
+<h3>@RequestMapping注解的"params"属性 - 写法二</h3>
+<a th:href="@{/testRequestParam/mustHaveParam(username=test)}">测试@RequestMapping注解的params属性，“param”：必须携带param参数： "/testRequestParam/mustHaveParam?username=test" --> success.html</a><br/>
+<a th:href="@{/testRequestParam/canNotHaveParam(skipLogon=true)}">测试@RequestMapping注解的params属性，“!param”：不能携带param参数： "/testRequestParam/canNotHaveParam?skipLogon=true" --> success.html(⚠️❌)</a><br/>
+<a th:href="@{/testRequestParam/paramKeyValueMatch(user=admin)}">测试@RequestMapping注解的params属性，“param=value”：必须携带param请求参数且param=value： "/testRequestParam/paramKeyValueMatch?user=admin" --> success.html</a><br/>
+<a th:href="@{/testRequestParam/paramKeyValueNotMatch(user=anonymous)}">测试@RequestMapping注解的params属性，“param!=value”：必须携带param请求参数但是param!=value： "/testRequestParam/paramKeyValueNotMatch?user=anonymous" --> success.html(⚠️❌）</a><br/>
+<hr/>
+<h3>@RequestMapping注解的"header"属性</h3>
+<a th:href="@{/testRequestHeader/mustHaveHeader}">测试@RequestMapping注解的header属性，“header”：必须携带header请求参数： "/testRequestHeader/mustHaveHeader, headers = {"Accept"} （浏览器会默认携带Accept请求头）" --> success.html</a><br/>
+<a th:href="@{/testRequestHeader/canNotHaveHeader}">测试@RequestMapping注解的header属性，“!header”：不能携带header请求参数： "/testRequestHeader/canNotHaveHeader, headers = {"!Upgrade-Insecure-Requests"}  （浏览器会默认携带Upgrade-Insecure-Requests请求头）" --> success.html(⚠️❌)</a><br/>
+<a th:href="@{/testRequestHeader/headerKeyValueMatch}">测试@RequestMapping注解的header属性，“header=value”：必须携带header请求参数且header=value： "/testRequestHeader/headerKeyValueMatch, headers = {"Host=localhost:8080"} （浏览器会默认携带Host请求头）" --> success.html</a><br/>
+<a th:href="@{/testRequestHeader/headerKeyValueNotMatch}">测试@RequestMapping注解的header属性，“header!=value”：必须携带header请求参数但是header!=value： "/testRequestHeader/headerKeyValueNotMatch, headers = {"Host!=localhost:8080"} （浏览器会默认携带Host请求头）" --> success.html(⚠️❌）</a><br/>
+<hr/>
+<h3>@RequestMapping注解的"value"路径的正则匹配</h3>
+<a th:href="@{/a1c/testQuestionMark}">测试@RequestMapping注解的"value"路径的正则匹配，？：表示任意的单个字符： "/a?c/testQuestionMark, /a?c/ -> /a1c/" --> success.html</a><br/>
+<a th:href="@{/a12c/testQuestionMark}">测试@RequestMapping注解的"value"路径的正则匹配，？：表示任意的单个字符： "/a?c/testQuestionMark, /a?c/ -> /a12c/" --> success.html(⚠️❌)</a><br/>
+<a th:href="@{/a?c/testQuestionMark}">测试@RequestMapping注解的"value"路径的正则匹配，？：表示任意的单个字符： "/a?c/testQuestionMark, /a?c/ -> /a?c/" --> success.html(⚠️❌)</a><br/>
+<a th:href="@{/ac/testSingleStar}">测试@RequestMapping注解的"value"路径的正则匹配，*：表示任意的0个或多个字符： "/a*c/testSingleStar, /a*c/ -> /ac/" --> success.html</a><br/>
+<a th:href="@{/a1c/testSingleStar}">测试@RequestMapping注解的"value"路径的正则匹配，*：表示任意的0个或多个字符： "/a*c/testSingleStar, /a*c/ -> /a1c/" --> success.html</a><br/>
+<a th:href="@{/a12345c/testSingleStar}">测试@RequestMapping注解的"value"路径的正则匹配，*：表示任意的0个或多个字符： "/a*c/testSingleStar, /a*c/ -> /a12345c/" --> success.html</a><br/>
+<a th:href="@{/a/testDoubleStar}">测试@RequestMapping注解的"value"路径的正则匹配，**：表示任意的一层或多层目录： "/**/testDoubleStar, /**/ -> /a/" --> success.html</a><br/>
+<a th:href="@{/a/b/testDoubleStar}">测试@RequestMapping注解的"value"路径的正则匹配，**：表示任意的一层或多层目录： "/**/testDoubleStar, /**/ -> /a/b/" --> success.html</a><br/>
+<hr/>
+<h3>@RequestMapping注解的"value"路径的占位符 - @PathVariable</h3>
+<a th:href="@{/testPathVariable/admin/001}">测试@RequestMapping注解的"value"路径的占位符，@PathVariable("username") String username, @PathVariable("id") String id： "/testPathVariable/admin/001" --> success.html(查看tomcat log输出)</a><br/>
+</body>
+</html>
