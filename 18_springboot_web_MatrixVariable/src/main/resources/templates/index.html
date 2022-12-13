@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>index首页</title>
+</head>
+<body>
+<h1>首页</h1>
+<h3>1、测试@MatrixVariable - 用法一（数组类型矩阵变量在URL中分开写）</h3>
+@PathVariable("role") String role, // ⚠️有@PathVariable, @MatrixVariable才能被解析使用<br/>
+@MatrixVariable("username") String username,<br/>
+@MatrixVariable("interests") List&ltString&gt interests,<br/>
+@MatrixVariable("age") Integer age<br/>
+<a th:href="@{/testMatrixVariable/manager;username=Ben;interests=basketball;interests=badminton;age=22}">"/testMatrixVariable/manager;username=Ben;interests=basketball;interests=badminton;age=22" --> success.html</a><br/>
+<a th:href="@{/testMatrixVariable/developer;username=Tom;interests=baseball;interests=football;age=28}">"/testMatrixVariable/developer;username=Tom;interests=baseball;interests=football;age=28" --> success.html</a><br/>
+<h3>1、测试@MatrixVariable - 用法一（数组类型矩阵变量在URL中合并写）</h3>
+<a th:href="@{/testMatrixVariable/manager;username=Ben;interests=basketball,badminton;age=22}">"/testMatrixVariable/manager;username=Ben;interests=basketball,badminton;age=22" --> success.html</a><br/>
+<a th:href="@{/testMatrixVariable/developer;username=Tom;interests=baseball,football;age=28}">"/testMatrixVariable/developer;username=Tom;interests=baseball,football;age=28" --> success.html</a><br/>
+<h3>2、测试@MatrixVariable - 用法二</h3>
+@MatrixVariable(value = "age", pathVar = "bossId") Integer bossAge,<br/>
+@MatrixVariable(value = "age", pathVar = "empId") Integer empAge<br/>
+<a th:href="@{/testMatrixVariable/1;age=20/2;age=10}">"/testMatrixVariable/1;age=20/2;age=10" --> success.html</a><br/>
+</body>
+</html>
