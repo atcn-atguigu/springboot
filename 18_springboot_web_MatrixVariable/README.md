@@ -63,14 +63,12 @@ public class MatrixVariableAnnotation {
 ```
 
 **手动开启矩阵变量**：
-
-- 实现`WebMvcConfigurer`接口：
-
 ```java
-@Configuration(proxyBeanMethods = false)
 /**
- * 开启矩阵变量的配置方式一：继承WebMvcConfigurer，重写configurePathMatch()方法 - setRemoveSemicolonContent(false)
+ * 开启配置方式一：实现接口WebMvcConfigurer对应方法
  */
+/*
+@Configuration(proxyBeanMethods = false)
 public class WebConfig implements WebMvcConfigurer {
     @Override
     public void configurePathMatch(PathMatchConfigurer configurer) {
@@ -80,15 +78,13 @@ public class WebConfig implements WebMvcConfigurer {
         configurer.setUrlPathHelper(urlPathHelper);
     }
 }
-```
+*/
 
-- 创建返回`WebMvcConfigurer`Bean：
 
-```java
-@Configuration(proxyBeanMethods = false)
 /**
- * 开启矩阵变量的配置方式二：Spring容器中修改容器对象里的配置方法
+ * 开启配置方式二：容器中放"webMvcConfigurer"容器对象并重写对应方法
  */
+@Configuration(proxyBeanMethods = false)
 public class WebConfig {
     // 容器中放"webMvcConfigurer"容器对象
     @Bean

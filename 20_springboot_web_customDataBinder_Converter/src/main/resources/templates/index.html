@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>index首页</title>
+</head>
+<body>
+<h1>首页</h1>
+<h3>1.1、测试Converter(String -> LocalDateTime)，RequestBody中的User的注册时间(S类型)转为目标日期类型(T类型) --> "/testConverter/user/LocalDateTime" --> "success"</h3>
+<textarea style="width: 750px; height: 130px;">
+curl --location --request POST 'http://localhost:8080/testConverter/user/LocalDateTime' \
+--header 'Content-Type: application/json' \
+--data-raw '{
+    "id": "1",
+    "name": "Tom",
+    "registerDate": "2022-12-23T10:15:30"
+}'
+</textarea>
+<hr>
+<h3>1.2、测试Converter(String -> Date)，RequestBody中的User的注册时间(S类型)转为目标日期类型(T类型) --> "/testConverter/user/Date" --> "success"</h3>
+<textarea style="width: 750px; height: 130px;">
+curl --location --request POST 'http://localhost:8080/testConverter/user/Date' \
+--header 'Content-Type: application/json' \
+--data-raw '{
+    "id": "1",
+    "name": "Tom",
+    "registerDate": "2022-12-23"
+}'
+</textarea>
+<hr>
+</body>
+</html>
