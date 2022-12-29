@@ -28,5 +28,15 @@ curl --location --request POST 'http://localhost:8080/testConverter/user/Date' \
 }'
 </textarea>
 <hr>
+<h3>2、GoodsConverter(String -> Goods)</h3>
+<form action="/my/converter" method= "post">
+    请输入商品信息（格式为apple, 10.58, 200）:
+    <!-- 以请求参数@RequestParam 形式传入商品信息，格式为字符串，逗号分隔，通过自定义的Converter映射转换成对象
+        value: 商品的name, 商品的price, 商品的number
+    -->
+    <input type="text" name="goods" value="apple, 10.58, 200"/><br>
+    <input type="submit" value="提交" />
+</form>
+<hr>
 </body>
 </html>

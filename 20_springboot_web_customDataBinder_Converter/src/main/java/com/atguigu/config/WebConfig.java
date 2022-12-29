@@ -1,5 +1,6 @@
 package com.atguigu.config;
 
+import com.atguigu.converter.GoodsConverter;
 import com.atguigu.converter.String2DateConverter;
 import com.atguigu.converter.String2LocalDateTimeConverter;
 import org.springframework.context.annotation.Bean;
@@ -38,6 +39,7 @@ public class WebConfig {
             public void addFormatters(FormatterRegistry registry) {
                 registry.addConverter(new String2DateConverter());
                 registry.addConverter(new String2LocalDateTimeConverter());
+                registry.addConverter(new GoodsConverter());
             }
         };
     }
