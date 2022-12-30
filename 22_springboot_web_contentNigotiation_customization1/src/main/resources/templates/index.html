@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>index首页</title>
+</head>
+<body>
+<h1>首页</h1>
+<a th:href="@{/test/person?format=json}">1、测试返回值为json格式 --> "/test/person?format=json"</a>
+<textarea style="width: 750px; height: 130px;">
+// 如下使用format基于请求参数决定返回类型为json
+curl --location --request GET 'http://localhost:8080/test/person?format=json'
+</textarea>
+<hr>
+<a th:href="@{/test/person?format=xml}">2、测试返回值为xml格式 --> "/test/person?format=xml"</a>
+<textarea style="width: 750px; height: 130px;">
+// 如下使用format基于请求参数决定返回类型为xml
+curl --location --request GET 'http://localhost:8080/test/person?format=xml'
+</textarea>
+<hr>
+</body>
+</html>
