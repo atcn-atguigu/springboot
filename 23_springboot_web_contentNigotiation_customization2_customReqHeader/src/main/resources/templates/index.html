@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>index首页</title>
+</head>
+<body>
+<h1>首页</h1>
+<h3>1、基于自定义请求头（application/x-guigu），返回自定义内容格式 --> "/test/person"</h3>
+<textarea style="width: 750px; height: 130px;">
+// Accept: application/x-guigu
+curl --location --request GET 'http://localhost:8080/test/person' \
+--header 'Accept: application/x-guigu'
+
+// Response - 自定义返回内容，使用";"分割
+Sam;20;Fri Dec 30 17:01:59 CST 2022
+</textarea>
+<hr>
+<h3>2、基于一般请求头（application/json），返回json内容格式 --> "/test/person"</h3>
+<textarea style="width: 750px; height: 130px;">
+// Accept: application/json
+curl --location --request GET 'http://localhost:8080/test/person' \
+--header 'Accept: application/json'
+
+// Response - json
+{"username":"Sam","age":20,"birth":"2022-12-30T09:07:31.835+00:00"}
+</textarea>
+<hr>
+<h3>3、基于一般请求头（application/xml），返回json内容格式 --> "/test/person"</h3>
+<textarea style="width: 750px; height: 130px;">
+// Accept: application/xml
+curl --location --request GET 'http://localhost:8080/test/person' \
+--header 'Accept: application/xml'
+
+// Response - xml
+Sam202022-12-30T09:06:54.639+00:00
+</textarea>
+<hr>
+</body>
+</html>

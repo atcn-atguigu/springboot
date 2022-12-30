@@ -1,0 +1,7 @@
+spring:
+  mvc:
+    hiddenmethod:
+      filter:
+        enabled: true   # 开启页面表单的Rest功能(支持PUT/DELETE/PATCH方法）
+    contentnegotiation:
+      favor-parameter: true   # 开启基于请求参数的内容协商
