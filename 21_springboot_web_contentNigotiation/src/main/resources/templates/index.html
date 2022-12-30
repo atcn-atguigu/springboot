@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>index首页</title>
+</head>
+<body>
+<h1>首页</h1>
+<h3>1、测试返回值为json格式 --> "/test/person"</h3>
+<textarea style="width: 750px; height: 130px;">
+// 浏览器默认请求表头为： Accept: text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.9
+// 可以看出浏览器xml请求头权重为0.9: application/xml;q=0.9, xml优先级默认比较高，所以浏览器访问返回xml格式内容
+
+// 如下使用 Accept: application/json 返回json内容
+curl --location --request GET 'http://localhost:8080/test/person' \
+--header 'Accept: application/json'
+</textarea>
+<hr>
+<h3>2、测试返回值为xml格式 --> "/test/person"</h3>
+<textarea style="width: 750px; height: 130px;">
+// // 如下使用 Accept: application/xml 返回xml内容
+curl --location --request GET 'http://localhost:8080/test/person' \
+--header 'Accept: application/xml'
+</textarea>
+<hr>
+</body>
+</html>
